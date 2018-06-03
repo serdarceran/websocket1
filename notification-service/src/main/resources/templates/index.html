@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+  </head>
+
+  <body>
+    <p th:inline="text">
+      You are logged as: <b>[[${#httpServletRequest.remoteUser}]]</b>
+      (<a href="/logout">logout</a>)
+      (<a target="_blank" href="/notifications.html">notifications</a>)
+      (<a target="_blank" href="/send.html">send via ws</a>)
+    </p>
+    <p th:inline="text">
+      Click the button below to perform an action.
+      <br />
+      <strong>[[${#httpServletRequest.remoteUser}]]</strong> will be notified via web socket.
+      <!--<br>You are logged asss: <b>[[${#httpServletRequest.remoteUser}]]</b>-->
+    </p>
+    <input id="do-some-action" type="button" value="Click me" />
+
+    <!-- Javascript functions -->
+    <script>
+
+      /**
+       * Send an action to the server.
+       */
+      function sendAction(event) {
+        event.preventDefault();
+        $.ajax({
+          url: "/some-action",
+          type: "POST"
+        });
+        return;
+      } // function sendAction
+      
+      /**
+       * Init operations.
+       */
+      $(document).ready(function() {
+        
+        // Bind the on-click event for the button element.
+        $("#do-some-action").on("click", sendAction);
+        
+      });
+
+    </script>
+
+  	<br />
+    <hr />
+    Proudly handcrafted by
+    <a href='http://netgloo.com/en'>Netgloo</a>
+
+  </body>
+
+</html>

@@ -1,0 +1,67 @@
+version: '2.2'
+services:
+    service1:
+        container_name: service11
+        build:
+            context: ./app-container
+            dockerfile: Dockerfile1
+            
+        expose:
+            - 8001
+        ports:
+            - 83:8001
+        networks:
+            - mynet2
+        hostname: service1
+    
+    service2:
+        container_name: service12
+        build:
+            context: ./app-container
+            dockerfile: Dockerfile2
+            
+        expose:
+            - 8001
+        ports:
+            - 84:8001
+        networks:
+            - mynet2
+        hostname: service2
+        
+    ws-service:
+        container_name: ws-service
+        build:
+            context: ./notification-service
+            dockerfile: Dockerfile
+            
+        expose:
+            - 8080
+        ports:
+            - 85:8080
+        networks:
+            - mynet2
+        hostname: ws-service
+    
+    nginx8:
+        container_name: nginx8
+        
+        build:
+            context: ./ngix-container
+            dockerfile: Dockerfile
+            
+        expose:
+            - 80
+        ports:
+            - 54328:80
+        networks:
+            - mynet2
+        hostname: nginx8    
+        
+        depends_on:
+            - service1
+            - service2
+            
+networks:
+    mynet2:
+        driver: bridge            
+            
