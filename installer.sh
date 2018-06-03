@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd notification-service
-mvn clean package
+mvn package
 
 
 docker-compose rm -fs

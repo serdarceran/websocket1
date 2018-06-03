@@ -53,6 +53,7 @@ services:
             - 80
         ports:
             - 54328:80
+            - 9020:9020
         networks:
             - mynet2
         hostname: nginx8    
